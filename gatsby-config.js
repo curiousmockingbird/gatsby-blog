@@ -8,7 +8,10 @@
  * @type {import('gatsby').GatsbyConfig}
  */
 
-require("dotenv").config
+require("dotenv").config();
+
+const user = process.env.USER_NAME;
+const password = process.env.PASSWORD;
 
 module.exports = {
   siteMetadata: {
@@ -45,9 +48,9 @@ module.exports = {
     {
       resolve: 'gatsby-source-mongodb',
       options: {
-        dbName: 'blog',
-        collection: 'articles',
-        connectionString:`mongodb+srv://${process.env.USER_NAME}:${process.env.PASSWORD}@blog-cluster.gvxybiz.mongodb.net/?retryWrites=true&w=majority`,
+        connectionString:`mongodb+srv://${user}:${password}@blog-cluster.gvxybiz.mongodb.net/?retryWrites=true&w=majority`,
+        dbName:'blog',
+        collection:'articles',
       }
     }
   ],
