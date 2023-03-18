@@ -7,6 +7,12 @@
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
+
+require("dotenv").config();
+
+const user = process.env.USER_NAME;
+const password = process.env.PASSWORD;
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -39,5 +45,13 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: 'gatsby-source-mongodb',
+      options: {
+        connectionString:`mongodb+srv://${user}:${password}@blog-cluster.gvxybiz.mongodb.net/?retryWrites=true&w=majority`,
+        dbName:'blog',
+        collection:'articles',
+      }
+    }
   ],
 }
