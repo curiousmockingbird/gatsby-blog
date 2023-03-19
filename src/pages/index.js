@@ -106,7 +106,7 @@ const IndexPage = (props) => {
           <h4 className={styles.listItemLink}>
             {article.node.title} ↗
           </h4>
-          {/* <p className={styles.listItemDescription}>{link.description}</p> */}
+          <p className={styles.listItemDescription}>{article.node.content}</p>
         </li>
       ))}
     </ul>
