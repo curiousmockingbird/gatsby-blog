@@ -5,6 +5,7 @@ import { StaticImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import * as styles from "../components/index.module.css"
+import { graphql } from "gatsby"
 
 const links = [
   {
@@ -69,7 +70,10 @@ const moreLinks = [
 
 const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
-const IndexPage = () => (
+const IndexPage = (props) => {
+  const articles = props.data.allMongodbBlogArticles.edges;
+
+  return(
   <Layout>
     <div className={styles.textCenter}>
       <StaticImage
@@ -97,15 +101,12 @@ const IndexPage = () => (
       </p>
     </div>
     <ul className={styles.list}>
-      {links.map(link => (
-        <li key={link.url} className={styles.listItem}>
-          <a
-            className={styles.listItemLink}
-            href={`${link.url}${utmParameters}`}
-          >
-            {link.text} ↗
-          </a>
-          <p className={styles.listItemDescription}>{link.description}</p>
+      {articles.map(article => (
+        <li key={article.node.id} className={styles.listItem}>
+          <h4 className={styles.listItemLink}>
+            {article.node.title} ↗
+          </h4>
+          {/* <p className={styles.listItemDescription}>{link.description}</p> */}
         </li>
       ))}
     </ul>
@@ -116,7 +117,8 @@ const IndexPage = () => (
       </React.Fragment>
     ))}
   </Layout>
-)
+  )
+}
 
 /**
  * Head export to define metadata for the page
@@ -126,3 +128,18 @@ const IndexPage = () => (
 export const Head = () => <Seo title="Home" />
 
 export default IndexPage
+
+export const pageQuery = graphql`
+  query {
+    allMongodbBlogArticles {
+      edges {
+        node {
+          id
+          title
+          name
+          content
+        }
+      }
+    }
+  }
+`
